@@ -1,9 +1,21 @@
 package com.example.demo.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+//agregar para conectar a la BD, indica a spring
+@Entity
+@Table(name = "productos")
 public class Producto {
 	//1 er
 	//la base datos las tabllas  - clase
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idProducto;
 	private String nombreProducto;
 	private String descripcion;
