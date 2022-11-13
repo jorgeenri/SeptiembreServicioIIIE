@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -21,8 +22,8 @@ public class UserDetailService implements UserDetailsService {
 		
 		//EL USER ES DE SPRING EL QUE SE IMPORTA user.security.core
 		if("profesor".equals(username)) {
-			//este User VVV
-			return new User("profesor","123", new ArrayList<>());
+			//este User VVV                // la contraseña debe de encripat, asi lo pide aoutho
+			return new User("profesor", new BCryptPasswordEncoder().encode("123"), new ArrayList<>());
 		}else {
 			throw new UsernameNotFoundException("Usuario no existe" + username);
 		}
