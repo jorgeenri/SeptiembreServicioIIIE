@@ -18,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 //import org.springframework.security.core.userdetails.User;
 //import org.springframework.security.core.userdetails.UserDetailsService;
@@ -42,6 +44,13 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter{
 //    <artifactId>spring-security-oauth2</artifactId>
 //    <version>2.3.8.RELEASE</version>
 //</dependency>
+	//NOTA 3: TAMBIEN AGREGAR ESAS DEPENDENCIAS
+//	<dependency>
+//    <groupId>org.springframework.security</groupId>
+//    <artifactId>spring-security-jwt</artifactId>
+//    <version>1.1.1.RELEASE</version>
+//</dependency>
+	
 
 ////VERSIONES PARA ABAJO DE 2.7.3
 //EN EL POM VAMOS A CONFIGURAR LA VERSION, MARCANDO UNA Y PONIENDO LA 2.6.7 IMPORTANTE PARA EXTENDER EL WebSecurityConfigurerAdapter	
@@ -86,9 +95,21 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter{
 	}
 	
 	//Agregamos
+//	@Bean
+//	public TokenStore tokenStore() {
+//		return new InMemoryTokenStore();
+//	}
+//	
 	@Bean
-	public TokenStore tokenStore() {
-		return new InMemoryTokenStore();
+	public JwtAccessTokenConverter accessTokenConverter() {
+		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+		converter.setSigningKey("wilder-publicidad");
+		return converter;
+	}
+	
+	@Bean
+	public JwtTokenStore tokenStore() {
+		return new JwtTokenStore(accessTokenConverter());
 	}
 	
 	
